@@ -9,6 +9,13 @@ import javax.swing.JTextPane;
 import javax.swing.JFrame;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.awt.*;
+import javax.swing.JButton;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import javax.swing.JLabel;
+import javax.swing.JList;
+import javax.swing.BoxLayout;
 
 
 /**
@@ -20,13 +27,17 @@ public class ClientView extends javax.swing.JPanel {
     private Client client;
     private Message message; //Observable
     
+    JList list;
+    
     public ClientView(Profile profile) {
         
         profile.setView(this);
         this.profile = profile;
-        initComponents();
+        
         ClientStarter cs = new ClientStarter(); //Starts a client in new thread
         cs.start();
+        
+        chooseChat();
         
         //Log out on close:
         JFrame frame = profile.getFrame();
@@ -165,6 +176,36 @@ public class ClientView extends javax.swing.JPanel {
         message = new Message(profile,0); // Send disconnect message
         client.update(message, evt);
         profile.getFrame().setVisible(false);//TODO: really closed??
+    }
+    
+    private void chooseChat() {
+        JLabel label = new JLabel("Choose a conversatio to join");
+        
+        //TODO: get list content from server
+        String[] s = new String[2];
+        s[0] = "Empty"; s[1] = "x";
+        list = new JList(s);
+        
+        JButton ok = new JButton("OK");
+        
+        BoxLayout box = new BoxLayout(this,BoxLayout.Y_AXIS);
+        setLayout(box);
+        
+        add(label);
+        add(list);
+        add(ok);
+        
+        ok.addActionListener(new ActionListener()
+        {
+          public void actionPerformed(ActionEvent e)
+          {
+              //TODO: fixa med storleken osv.
+              initComponents();
+              System.out.println(list.getSelectedValue());
+              
+              //TODO: Add: om inge valt - create empty typ
+          }
+        });
     }
     
     /**

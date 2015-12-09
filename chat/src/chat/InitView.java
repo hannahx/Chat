@@ -234,6 +234,13 @@ public class InitView extends JPanel {
             frame.add(cv);
             frame.pack();
             frame.setVisible(true);
+            
+            //Open choose window
+//            ChooseChat cc = new ChooseChat(cv, frame, profile);
+//            frame.add(cc);
+//            frame.add(cc);
+//            frame.pack();
+//            frame.setVisible(true);
         }
         else
         {
