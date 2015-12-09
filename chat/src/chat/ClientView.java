@@ -16,18 +16,24 @@ import java.awt.event.ActionListener;
 import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.BoxLayout;
+import javax.swing.DefaultListModel;
+import javax.swing.JPanel;
 
 
 /**
  * ClientView starts a client, and creates the chat window for it.
  */
-public class ClientView extends javax.swing.JPanel {
+public class ClientView extends JPanel {
 
     private Profile profile;
     private Client client;
     private Message message; //Observable
     
-    JList list;
+//    JList list;
+//    DefaultListModel listModel;
+    
+    JLabel label;
+    JPanel pan;
     
     public ClientView(Profile profile) {
         
@@ -37,7 +43,7 @@ public class ClientView extends javax.swing.JPanel {
         ClientStarter cs = new ClientStarter(); //Starts a client in new thread
         cs.start();
         
-        chooseChat();
+        //chooseChat();
         
         //Log out on close:
         JFrame frame = profile.getFrame();
@@ -172,6 +178,22 @@ public class ClientView extends javax.swing.JPanel {
         return infoArea;
     }
     
+    public JLabel getLabel() {
+        return label;
+    }
+    
+//    public JList getList() {
+//        return list;
+//    }
+//    
+//    public void setList(JList l) {
+//        list = l;
+//    }
+//    
+//    public DefaultListModel getListModel() {
+//        return listModel;
+//    }
+    
     public void logOut(Object evt) {
         message = new Message(profile,0); // Send disconnect message
         client.update(message, evt);
@@ -179,12 +201,14 @@ public class ClientView extends javax.swing.JPanel {
     }
     
     private void chooseChat() {
-        JLabel label = new JLabel("Choose a conversatio to join");
+        profile.getFrame().setSize(350, 350);
         
-        //TODO: get list content from server
-        String[] s = new String[2];
-        s[0] = "Empty"; s[1] = "x";
-        list = new JList(s);
+        label = new JLabel("Choose a conversatio to join");
+        
+        //TODO: get list content from server (you have it... )
+        DefaultListModel listModel = new DefaultListModel();
+        listModel = client.getListModel();
+        JList list = new JList(listModel);
         
         JButton ok = new JButton("OK");
         
@@ -197,14 +221,16 @@ public class ClientView extends javax.swing.JPanel {
         
         ok.addActionListener(new ActionListener()
         {
-          public void actionPerformed(ActionEvent e)
-          {
-              //TODO: fixa med storleken osv.
-              initComponents();
-              System.out.println(list.getSelectedValue());
-              
-              //TODO: Add: om inge valt - create empty typ
-          }
+            public void actionPerformed(ActionEvent e)
+            {
+                profile.getView().removeAll();
+                profile.getView().revalidate();
+                profile.getFrame().setSize(600, 350);
+                initComponents();
+                
+                //System.out.println(list.getSelectedValue());
+                //TODO: Add: om inge valt - create empty typ
+            }
         });
     }
     
@@ -213,7 +239,8 @@ public class ClientView extends javax.swing.JPanel {
      */
     class ClientStarter extends Thread {
         public void run () {
-             client = new Client(profile);
+            client = new Client(profile);
+            chooseChat();
         }
     }
 }

@@ -234,13 +234,6 @@ public class InitView extends JPanel {
             frame.add(cv);
             frame.pack();
             frame.setVisible(true);
-            
-            //Open choose window
-//            ChooseChat cc = new ChooseChat(cv, frame, profile);
-//            frame.add(cc);
-//            frame.add(cc);
-//            frame.pack();
-//            frame.setVisible(true);
         }
         else
         {
@@ -273,9 +266,18 @@ public class InitView extends JPanel {
      */
     class ServerStarter extends Thread {
        public void run () {
+            ServerView sv = new ServerView(servPortField.getText());
+            JFrame f = new JFrame("Server");
+            f.add(sv);
+            f.add(sv);
+            f.pack();
+            f.setVisible(true);
+            
             int port = Integer.parseInt(servPortField.getText());
             ChatModel model = new ChatModel();
             Server s = new Server(port, model);
+            
+
        }
 
     }

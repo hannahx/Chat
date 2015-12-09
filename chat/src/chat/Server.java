@@ -86,7 +86,6 @@ public class Server {
                         System.out.println("Client disconnect!");
                         System.exit(1);
                     }
-                    //System.out.println("S reads: " + echo);
                     
                     //1. Check if connect/disconnect
                     try {

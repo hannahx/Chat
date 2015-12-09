@@ -15,6 +15,9 @@ import java.net.Inet4Address;
 import java.net.Socket;
 import java.util.Observable;
 import java.util.Observer;
+import javax.swing.DefaultListModel;
+import javax.swing.JLabel;
+import javax.swing.JList;
 import javax.swing.JTextPane;
 import javax.swing.text.Style;
 import javax.swing.text.StyleConstants;
@@ -41,9 +44,14 @@ public class Client implements Observer {
     private boolean Disconnect = false;
     private int newID;
     
+    private DefaultListModel listModel;
+    
     public Client(Profile profile) {
         
         this.profile = profile;
+        
+        listModel = new DefaultListModel();
+        listModel.addElement("Empty");
         
         //Connect to server
         try {
@@ -99,24 +107,32 @@ public class Client implements Observer {
             }
             else if (element.getElementsByTagName("online").item(0) != null){
                 NodeList online = element.getElementsByTagName("online");
-                JTextPane jt = profile.getView().getInfoArea();
-                jt.setText(null);
                 
-                StyledDocument sdoc = jt.getStyledDocument();
-                Style style = jt.addStyle("Style", null);
-                StyleConstants.setForeground(style, col);
-                
-                for(int j=0; j<online.getLength(); j++) {
-                    //TODO: behövs id...??? isf färg hellre?!!!!!
-                    line = (Element) online.item(j);
-                    String n = line.getAttribute("name");
-                    try { sdoc.insertString(sdoc.getLength(), n + "\n", style); 
-                    } catch (Exception e) {}
-                    
-//                    if(j==online.getLength()-1)
-//                        newID = Integer.parseInt(line.getAttribute("ID"));
+                if(profile.getView().getInfoArea() != null) {
+                    JTextPane jt = profile.getView().getInfoArea();
+                    jt.setText(null);
+
+                    StyledDocument sdoc = jt.getStyledDocument();
+                    Style style = jt.addStyle("Style", null);
+                    StyleConstants.setForeground(style, col);
+
+                    for(int j=0; j<online.getLength(); j++) {
+                        //TODO: behövs id...??? isf färg hellre?!!!!!
+                        line = (Element) online.item(j);
+                        String n = line.getAttribute("name");
+
+                        try { sdoc.insertString(sdoc.getLength(), n + "\n", style); 
+                        } catch (Exception e) {
+                            System.out.println("info area null");
+                        }
+                    }
                 }
                 
+                for(int j=0; j<online.getLength(); j++) {
+                    line = (Element) online.item(j);
+                    String n = line.getAttribute("name");
+                    listModel.addElement(n);
+                }  
             }
             else {
                 finalText += ": ";
@@ -158,30 +174,40 @@ public class Client implements Observer {
         return "";
     }
     
+    public DefaultListModel getListModel() {
+        for(int j=0; j<listModel.size(); j++) {
+            System.out.println("--> " + listModel.get(j));
+        }
+//        if(listModel.size()>1)
+//            return listModel;
+//        return null;
+        return listModel;
+    }
+    
     class ReadFromServer extends Thread {
         public void run() {            
             while(true) {
-            try {
-                String IN = input.readLine();
-                if(IN==null) {
-                    System.out.println("Server disconnect!");
-                    System.exit(1);
-                }
                 try {
-                    parseXML(IN, profile.getView().getChatArea());
-                } catch(Exception e) {
+                    String IN = input.readLine();
+                    if(IN==null) {
+                        System.out.println("Server disconnect!");
+                        System.exit(1);
+                    }
                     try {
-                    StyledDocument sdoc = profile.getView().getChatArea().getStyledDocument();
-                    Style style = profile.getView().getChatArea().addStyle("Style", null);
-                    StyleConstants.setForeground(style, Color.black);
-                    sdoc.insertString(sdoc.getLength(), "Broken message... \n" ,style); 
-                    } catch (Exception E) {}
+                        parseXML(IN, profile.getView().getChatArea());
+                    } catch(Exception e) {
+                        try {
+                        StyledDocument sdoc = profile.getView().getChatArea().getStyledDocument();
+                        Style style = profile.getView().getChatArea().addStyle("Style", null);
+                        StyleConstants.setForeground(style, Color.black);
+                        sdoc.insertString(sdoc.getLength(), "Broken message... \n" ,style); 
+                        } catch (Exception E) {}
+                    }
+
+                    //System.out.println("C (" + profile.getName() + ") reads: " + IN);
+                } catch (IOException ex) {
+                    System.out.println("C: Error: Unable to read server response\n\t" + ex);
                 }
-                
-                //System.out.println("C (" + profile.getName() + ") reads: " + IN);
-            } catch (IOException ex) {
-                System.out.println("C: Error: Unable to read server response\n\t" + ex);
-            }
             }
 
         }
