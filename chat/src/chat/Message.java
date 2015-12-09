@@ -37,7 +37,9 @@ public class Message extends Observable  {
     }
 
     public String getMessage() {
-        return convertToXML(mess);
+        String ret = convertToXML(mess);
+        System.out.println("M: Message sent: " + ret);
+        return ret;
     }
     
     // Try to use when connecting

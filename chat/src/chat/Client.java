@@ -13,6 +13,7 @@ import java.io.PrintWriter;
 import java.io.StringReader;
 import java.net.Inet4Address;
 import java.net.Socket;
+import java.util.ArrayList;
 import java.util.Observable;
 import java.util.Observer;
 import javax.swing.DefaultListModel;
@@ -45,6 +46,7 @@ public class Client implements Observer {
     private int newID;
     
     private DefaultListModel listModel;
+    private ArrayList<String> onlineArr = new ArrayList<String>();
     
     public Client(Profile profile) {
         
@@ -68,8 +70,10 @@ public class Client implements Observer {
             System.exit(1);
         }
         
+        System.out.println("C: connected");
+        
         //Send "connected" message
-        Message m = new Message(profile, 1);
+        Message m = new Message(profile, 1); //TODO: this message gets lost somewhere :(
         out.println(m.getMessage());
         
         // Listen for message from Server (in new thread)
@@ -91,6 +95,8 @@ public class Client implements Observer {
 
         Document doc = db.parse(is);
         NodeList nodes = doc.getElementsByTagName("message");
+        
+        System.out.println("client reads: " + s);
 
         for (int i = 0; i < nodes.getLength(); i++) {
             Element element = (Element) nodes.item(i);
@@ -107,7 +113,7 @@ public class Client implements Observer {
             }
             else if (element.getElementsByTagName("online").item(0) != null){
                 NodeList online = element.getElementsByTagName("online");
-                
+                System.out.println("C: ONLINE");
                 //TODO: hoppar över detta så länge
 //                if(profile.getView().getInfoArea() != null) {
 //                    JTextPane jt = profile.getView().getInfoArea();
@@ -130,11 +136,14 @@ public class Client implements Observer {
 //                }
                 
                 listModel.clear();
+                onlineArr = new ArrayList<String>();//or ety or something
                 //listModel.addElement("Empty");
                 for(int j=0; j<online.getLength(); j++) {
                     line = (Element) online.item(j);
                     String n = line.getAttribute("name");
                     listModel.addElement(n);
+                    
+                    onlineArr.add(n);
                 }  
             }
             else {
@@ -177,10 +186,14 @@ public class Client implements Observer {
         for(int j=0; j<listModel.size(); j++) {
             System.out.println("--> " + listModel.get(j));
         }
-//        if(listModel.size()>1)
+//        if(listModel.size()>0)
 //            return listModel;
 //        return null;
         return listModel;
+    }
+    
+    public ArrayList<String> getOnline() {
+        return onlineArr;
     }
     
     class ReadFromServer extends Thread {

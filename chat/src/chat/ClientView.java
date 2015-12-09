@@ -16,6 +16,7 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JList;
+import java.util.ArrayList;
 
 /**
  *
@@ -50,12 +51,12 @@ public class ClientView extends javax.swing.JPanel {
         jRadioButtonMenuItem1 = new javax.swing.JRadioButtonMenuItem();
         jLabel1 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTextPane1 = new javax.swing.JTextPane();
-        jTextField1 = new javax.swing.JTextField();
+        onlineTextPane = new javax.swing.JTextPane();
         jLabel2 = new javax.swing.JLabel();
         jScrollPane3 = new javax.swing.JScrollPane();
         jList1 = new javax.swing.JList();
         startChat = new javax.swing.JButton();
+        jLabel3 = new javax.swing.JLabel();
 
         jScrollPane2.setViewportView(jTextPane2);
 
@@ -64,10 +65,8 @@ public class ClientView extends javax.swing.JPanel {
 
         jLabel1.setText("Online");
 
-        jTextPane1.setEditable(false);
-        jScrollPane1.setViewportView(jTextPane1);
-
-        jTextField1.setText("Join a group chat or create an empty chat!");
+        onlineTextPane.setEditable(false);
+        jScrollPane1.setViewportView(onlineTextPane);
 
         jLabel2.setText("Group chats");
 
@@ -85,14 +84,16 @@ public class ClientView extends javax.swing.JPanel {
             }
         });
 
+        jLabel3.setText("Join a group chat or create an empty chat!");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(jLabel2)
@@ -103,20 +104,22 @@ public class ClientView extends javax.swing.JPanel {
                             .addComponent(jLabel1)
                             .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 132, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 168, Short.MAX_VALUE)))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(166, 166, 166)
+                                .addComponent(startChat))
+                            .addGroup(layout.createSequentialGroup()
+                                .addContainerGap()
+                                .addComponent(jLabel3)))
+                        .addGap(0, 216, Short.MAX_VALUE)))
                 .addContainerGap())
-            .addGroup(layout.createSequentialGroup()
-                .addGap(166, 166, 166)
-                .addComponent(startChat)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(8, 8, 8)
+                .addComponent(jLabel3)
+                .addGap(15, 15, 15)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
                     .addComponent(jLabel2))
@@ -124,7 +127,7 @@ public class ClientView extends javax.swing.JPanel {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jScrollPane1)
                     .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 190, Short.MAX_VALUE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 14, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 13, Short.MAX_VALUE)
                 .addComponent(startChat)
                 .addContainerGap())
         );
@@ -143,57 +146,32 @@ public class ClientView extends javax.swing.JPanel {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JList jList1;
     private javax.swing.JRadioButtonMenuItem jRadioButtonMenuItem1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextPane jTextPane1;
     private javax.swing.JTextPane jTextPane2;
+    private javax.swing.JTextPane onlineTextPane;
     private javax.swing.JButton startChat;
     // End of variables declaration//GEN-END:variables
 
     
     private void chooseChat() {
-        //add all content!
+        System.out.println("Choose chat");
+        DefaultListModel listModel = new DefaultListModel();
+
+        listModel = client.getListModel();
+        //jList1 = new JList(listModel);
+        //jList1.clear();
+        onlineTextPane.setText("test\n");
+        ArrayList<String> online = client.getOnline();
+        for(int i=0; i<online.size(); i++) {
+            onlineTextPane.setText(onlineTextPane.getText() + online.get(i) + "\n");
+        } 
         
-//        profile.getFrame().setSize(300, 200);
-//        JLabel label = new JLabel("Online");
-//
-//        DefaultListModel listModel = new DefaultListModel();
-//        listModel = client.getListModel();
-//        JList list = new JList(listModel);
-//        
-//        JButton ok = new JButton("OK");
-//        
-//        label.setAlignmentX(Component.CENTER_ALIGNMENT);
-//        list.setAlignmentX(Component.CENTER_ALIGNMENT);
-//        ok.setAlignmentX(Component.CENTER_ALIGNMENT);
-//        
-//        BoxLayout box = new BoxLayout(this,BoxLayout.Y_AXIS);
-//        setLayout(box);
-//
-//        Dimension space = new Dimension(0, 20);
-//        add(label);
-//        add(Box.createRigidArea(space));
-//        add(list);
-//        add(Box.createRigidArea(space));
-//        add(ok);
-//        
-//        ok.addActionListener(new ActionListener()
-//        {
-//            public void actionPerformed(ActionEvent e)
-//            {
-//                profile.getView().removeAll();
-//                profile.getView().revalidate();
-//                profile.getFrame().setSize(600, 350);
-//                initComponents();
-//                
-//                //System.out.println(list.getSelectedValue());
-//                //TODO: Add: om inge valt - create empty typ
-//            }
-//        });
+
     }
     
     
@@ -205,7 +183,12 @@ public class ClientView extends javax.swing.JPanel {
     class ClientStarter extends Thread {
         public void run () {
             client = new Client(profile);
-            //chooseChat();
+            try {
+                Thread.sleep(1000);                 //1000 milliseconds is one second.
+            } catch(InterruptedException ex) {
+                Thread.currentThread().interrupt();
+            }
+            chooseChat();
         }
     }
 
