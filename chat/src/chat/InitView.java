@@ -227,9 +227,10 @@ public class InitView extends JPanel {
             Profile profile = new Profile(n, col, p, ip, frame, null, id); //TODO: blir garanterat fel med model.generateID()
             //Annars: generera random nummer mellan 1-10000: liten chans att fler får samma...?
             //TODO: check if id already exists
+
             ClientView cv = new ClientView(profile);
             
-            //Open chat window
+            //Open cliet window
             frame.add(cv);
             frame.add(cv);
             frame.pack();

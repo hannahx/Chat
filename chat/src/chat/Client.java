@@ -51,7 +51,7 @@ public class Client implements Observer {
         this.profile = profile;
         
         listModel = new DefaultListModel();
-        listModel.addElement("Empty");
+        //listModel.addElement("Empty");
         
         //Connect to server
         try {
@@ -108,26 +108,29 @@ public class Client implements Observer {
             else if (element.getElementsByTagName("online").item(0) != null){
                 NodeList online = element.getElementsByTagName("online");
                 
-                if(profile.getView().getInfoArea() != null) {
-                    JTextPane jt = profile.getView().getInfoArea();
-                    jt.setText(null);
-
-                    StyledDocument sdoc = jt.getStyledDocument();
-                    Style style = jt.addStyle("Style", null);
-                    StyleConstants.setForeground(style, col);
-
-                    for(int j=0; j<online.getLength(); j++) {
-                        //TODO: behövs id...??? isf färg hellre?!!!!!
-                        line = (Element) online.item(j);
-                        String n = line.getAttribute("name");
-
-                        try { sdoc.insertString(sdoc.getLength(), n + "\n", style); 
-                        } catch (Exception e) {
-                            System.out.println("info area null");
-                        }
-                    }
-                }
+                //TODO: hoppar över detta så länge
+//                if(profile.getView().getInfoArea() != null) {
+//                    JTextPane jt = profile.getView().getInfoArea();
+//                    jt.setText(null);
+//
+//                    StyledDocument sdoc = jt.getStyledDocument();
+//                    Style style = jt.addStyle("Style", null);
+//                    StyleConstants.setForeground(style, col);
+//
+//                    for(int j=0; j<online.getLength(); j++) {
+//                        //TODO: behövs id...??? isf färg hellre?!!!!!
+//                        line = (Element) online.item(j);
+//                        String n = line.getAttribute("name");
+//
+//                        try { sdoc.insertString(sdoc.getLength(), n + "\n", style); 
+//                        } catch (Exception e) {
+//                            System.out.println("info area null");
+//                        }
+//                    }
+//                }
                 
+                listModel.clear();
+                //listModel.addElement("Empty");
                 for(int j=0; j<online.getLength(); j++) {
                     line = (Element) online.item(j);
                     String n = line.getAttribute("name");
@@ -145,10 +148,6 @@ public class Client implements Observer {
                     col =  Color.decode(colorStr);
                 }
             }
-//            if(element.getElementsByTagName("connect").item(0) != null) {
-//                profile.setID(newID);
-//            }
-            //else {
             if(element.getElementsByTagName("connect").item(0) == null) {
                 //Add to "chat area"
                 StyledDocument sdoc = t.getStyledDocument();

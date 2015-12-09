@@ -23,6 +23,7 @@ public class Chat {
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); //TODO: nej - förstör för servern om nån annan stänger av... (eller är det verkligen därför? tror inte det..)
         frame.add(window1);
         frame.pack();
+        frame.setLocationRelativeTo(null);
         frame.setVisible(true);
     }
     

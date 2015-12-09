@@ -5,53 +5,35 @@
  */
 package chat;
 
-import javax.swing.JTextPane;
-import javax.swing.JFrame;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
-import java.awt.*;
-import javax.swing.JButton;
+import java.awt.Component;
+import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import javax.swing.JLabel;
-import javax.swing.JList;
+import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.DefaultListModel;
-import javax.swing.JPanel;
-
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JList;
 
 /**
- * ClientView starts a client, and creates the chat window for it.
+ *
+ * @author Hannah
  */
-public class ClientView extends JPanel {
+public class ClientView extends javax.swing.JPanel {
 
     private Profile profile;
     private Client client;
-    private Message message; //Observable
-    
-//    JList list;
-//    DefaultListModel listModel;
-    
-    JLabel label;
-    JPanel pan;
     
     public ClientView(Profile profile) {
-        
-        profile.setView(this);
         this.profile = profile;
+        
+        initComponents();
         
         ClientStarter cs = new ClientStarter(); //Starts a client in new thread
         cs.start();
-        
-        //chooseChat();
-        
-        //Log out on close:
-        JFrame frame = profile.getFrame();
-        frame.addWindowListener(new WindowAdapter() {
-            public void windowClosing(WindowEvent evt) {
-                logOut(evt);
-            }
-        });
+
     }
 
     /**
@@ -63,49 +45,45 @@ public class ClientView extends JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jScrollPane4 = new javax.swing.JScrollPane();
-        jTextArea1 = new javax.swing.JTextArea();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        sendArea = new javax.swing.JTextArea();
         jScrollPane2 = new javax.swing.JScrollPane();
-        chatArea = new javax.swing.JTextPane();
-        jScrollPane3 = new javax.swing.JScrollPane();
-        infoArea = new javax.swing.JTextPane();
-        sendButton = new javax.swing.JButton();
-        logOutButton = new javax.swing.JButton();
+        jTextPane2 = new javax.swing.JTextPane();
+        jRadioButtonMenuItem1 = new javax.swing.JRadioButtonMenuItem();
         jLabel1 = new javax.swing.JLabel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jTextPane1 = new javax.swing.JTextPane();
+        jTextField1 = new javax.swing.JTextField();
+        jLabel2 = new javax.swing.JLabel();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        jList1 = new javax.swing.JList();
+        startChat = new javax.swing.JButton();
 
-        jTextArea1.setColumns(20);
-        jTextArea1.setRows(5);
-        jScrollPane4.setViewportView(jTextArea1);
+        jScrollPane2.setViewportView(jTextPane2);
 
-        jScrollPane1.setHorizontalScrollBar(null);
-
-        sendArea.setColumns(20);
-        sendArea.setRows(5);
-        jScrollPane1.setViewportView(sendArea);
-
-        chatArea.setEditable(false);
-        jScrollPane2.setViewportView(chatArea);
-
-        infoArea.setEditable(false);
-        jScrollPane3.setViewportView(infoArea);
-
-        sendButton.setText("Send!");
-        sendButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                sendButtonActionPerformed(evt);
-            }
-        });
-
-        logOutButton.setText("Log Out!");
-        logOutButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                logOutButtonActionPerformed(evt);
-            }
-        });
+        jRadioButtonMenuItem1.setSelected(true);
+        jRadioButtonMenuItem1.setText("jRadioButtonMenuItem1");
 
         jLabel1.setText("Online");
+
+        jTextPane1.setEditable(false);
+        jScrollPane1.setViewportView(jTextPane1);
+
+        jTextField1.setText("Join a group chat or create an empty chat!");
+
+        jLabel2.setText("Group chats");
+
+        jList1.setModel(new javax.swing.AbstractListModel() {
+            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
+            public int getSize() { return strings.length; }
+            public Object getElementAt(int i) { return strings[i]; }
+        });
+        jScrollPane3.setViewportView(jList1);
+
+        startChat.setText("OK");
+        startChat.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                startChatActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -113,126 +91,113 @@ public class ClientView extends JPanel {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 331, Short.MAX_VALUE)
-                    .addComponent(jScrollPane2))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(sendButton, javax.swing.GroupLayout.DEFAULT_SIZE, 69, Short.MAX_VALUE)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jLabel2)
+                                .addGap(0, 0, Short.MAX_VALUE))
+                            .addComponent(jScrollPane3))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(logOutButton))
-                    .addComponent(jScrollPane3)
-                    .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel1)
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 132, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 168, Short.MAX_VALUE)))
                 .addContainerGap())
+            .addGroup(layout.createSequentialGroup()
+                .addGap(166, 166, 166)
+                .addComponent(startChat)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+            .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel1)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jScrollPane3))
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 185, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(8, 8, 8)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel1)
+                    .addComponent(jLabel2))
+                .addGap(9, 9, 9)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(logOutButton, javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(sendButton, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(jScrollPane1)
+                    .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 190, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 14, Short.MAX_VALUE)
+                .addComponent(startChat)
                 .addContainerGap())
         );
     }// </editor-fold>//GEN-END:initComponents
 
-    private void sendButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sendButtonActionPerformed
-        message = new Message(sendArea.getText(), profile);
-        client.update(message, evt);
-        sendArea.setText("");
-    }//GEN-LAST:event_sendButtonActionPerformed
-
-    private void logOutButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_logOutButtonActionPerformed
-        logOut(evt);
-    }//GEN-LAST:event_logOutButtonActionPerformed
+    private void startChatActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_startChatActionPerformed
+        ChatView cv = new ChatView(profile, client); //open cht window
+        JFrame frame = new JFrame("Chat [" + profile.getName() + "]");
+        frame.add(cv);
+        frame.add(cv);
+        frame.pack();
+        frame.setVisible(true);
+    }//GEN-LAST:event_startChatActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JTextPane chatArea;
-    private javax.swing.JTextPane infoArea;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JList jList1;
+    private javax.swing.JRadioButtonMenuItem jRadioButtonMenuItem1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
-    private javax.swing.JScrollPane jScrollPane4;
-    private javax.swing.JTextArea jTextArea1;
-    private javax.swing.JButton logOutButton;
-    private javax.swing.JTextArea sendArea;
-    private javax.swing.JButton sendButton;
+    private javax.swing.JTextField jTextField1;
+    private javax.swing.JTextPane jTextPane1;
+    private javax.swing.JTextPane jTextPane2;
+    private javax.swing.JButton startChat;
     // End of variables declaration//GEN-END:variables
 
-    public JTextPane getChatArea() {
-        return chatArea;
-    }
-    
-    public JTextPane getInfoArea() {
-        return infoArea;
-    }
-    
-    public JLabel getLabel() {
-        return label;
-    }
-    
-//    public JList getList() {
-//        return list;
-//    }
-//    
-//    public void setList(JList l) {
-//        list = l;
-//    }
-//    
-//    public DefaultListModel getListModel() {
-//        return listModel;
-//    }
-    
-    public void logOut(Object evt) {
-        message = new Message(profile,0); // Send disconnect message
-        client.update(message, evt);
-        profile.getFrame().setVisible(false);//TODO: really closed??
-    }
     
     private void chooseChat() {
-        profile.getFrame().setSize(350, 350);
+        //add all content!
         
-        label = new JLabel("Choose a conversatio to join");
-        
-        //TODO: get list content from server (you have it... )
-        DefaultListModel listModel = new DefaultListModel();
-        listModel = client.getListModel();
-        JList list = new JList(listModel);
-        
-        JButton ok = new JButton("OK");
-        
-        BoxLayout box = new BoxLayout(this,BoxLayout.Y_AXIS);
-        setLayout(box);
-        
-        add(label);
-        add(list);
-        add(ok);
-        
-        ok.addActionListener(new ActionListener()
-        {
-            public void actionPerformed(ActionEvent e)
-            {
-                profile.getView().removeAll();
-                profile.getView().revalidate();
-                profile.getFrame().setSize(600, 350);
-                initComponents();
-                
-                //System.out.println(list.getSelectedValue());
-                //TODO: Add: om inge valt - create empty typ
-            }
-        });
+//        profile.getFrame().setSize(300, 200);
+//        JLabel label = new JLabel("Online");
+//
+//        DefaultListModel listModel = new DefaultListModel();
+//        listModel = client.getListModel();
+//        JList list = new JList(listModel);
+//        
+//        JButton ok = new JButton("OK");
+//        
+//        label.setAlignmentX(Component.CENTER_ALIGNMENT);
+//        list.setAlignmentX(Component.CENTER_ALIGNMENT);
+//        ok.setAlignmentX(Component.CENTER_ALIGNMENT);
+//        
+//        BoxLayout box = new BoxLayout(this,BoxLayout.Y_AXIS);
+//        setLayout(box);
+//
+//        Dimension space = new Dimension(0, 20);
+//        add(label);
+//        add(Box.createRigidArea(space));
+//        add(list);
+//        add(Box.createRigidArea(space));
+//        add(ok);
+//        
+//        ok.addActionListener(new ActionListener()
+//        {
+//            public void actionPerformed(ActionEvent e)
+//            {
+//                profile.getView().removeAll();
+//                profile.getView().revalidate();
+//                profile.getFrame().setSize(600, 350);
+//                initComponents();
+//                
+//                //System.out.println(list.getSelectedValue());
+//                //TODO: Add: om inge valt - create empty typ
+//            }
+//        });
     }
+    
+    
+    
     
     /**
      * ClientStarter stats a new client in a new thread
@@ -240,7 +205,8 @@ public class ClientView extends JPanel {
     class ClientStarter extends Thread {
         public void run () {
             client = new Client(profile);
-            chooseChat();
+            //chooseChat();
         }
     }
+
 }
