@@ -5,16 +5,8 @@
  */
 package chat;
 
-import java.awt.Component;
-import java.awt.Dimension;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import javax.swing.Box;
-import javax.swing.BoxLayout;
 import javax.swing.DefaultListModel;
-import javax.swing.JButton;
 import javax.swing.JFrame;
-import javax.swing.JLabel;
 import javax.swing.JList;
 import java.util.ArrayList;
 
@@ -120,8 +112,8 @@ public class ClientView extends javax.swing.JPanel {
                 .addContainerGap()
                 .addComponent(jLabel3)
                 .addGap(15, 15, 15)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel1)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jLabel2))
                 .addGap(9, 9, 9)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
@@ -165,13 +157,11 @@ public class ClientView extends javax.swing.JPanel {
         listModel = client.getListModel();
         //jList1 = new JList(listModel);
         //jList1.clear();
-        onlineTextPane.setText("test\n");
+        //onlineTextPane.setText("test\n");
         ArrayList<String> online = client.getOnline();
         for(int i=0; i<online.size(); i++) {
             onlineTextPane.setText(onlineTextPane.getText() + online.get(i) + "\n");
         } 
-        
-
     }
     
     

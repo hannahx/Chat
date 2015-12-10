@@ -9,17 +9,7 @@ import javax.swing.JTextPane;
 import javax.swing.JFrame;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-import java.awt.*;
-import javax.swing.JButton;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import javax.swing.JLabel;
-import javax.swing.JList;
-import javax.swing.BoxLayout;
-import javax.swing.Box;
-import javax.swing.DefaultListModel;
 import javax.swing.JPanel;
-import javax.swing.ListSelectionModel;
 
 
 /**

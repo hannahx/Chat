@@ -48,11 +48,16 @@ public class Client implements Observer {
     private DefaultListModel listModel;
     private ArrayList<String> onlineArr = new ArrayList<String>();
     
+    JTextPane t;
+    
     public Client(Profile profile) {
         
         this.profile = profile;
         
         listModel = new DefaultListModel();
+        
+        if(profile.getView() != null)
+            t = profile.getView().getChatArea();
         //listModel.addElement("Empty");
         
         //Connect to server
@@ -72,13 +77,16 @@ public class Client implements Observer {
         
         System.out.println("C: connected");
         
-        //Send "connected" message
-        Message m = new Message(profile, 1); //TODO: this message gets lost somewhere :(
-        out.println(m.getMessage());
         
         // Listen for message from Server (in new thread)
         ReadFromServer rs = new ReadFromServer();
         rs.start();
+        
+        //Send "connected" message
+        Message m = new Message(profile, 1); //TODO: this message gets lost somewhere :(
+        out.println(m.getMessage());
+        
+
     }
 
     @Override
@@ -88,7 +96,10 @@ public class Client implements Observer {
         out.println(in); //Send message to Server
     }
     
-    public void parseXML(String s, JTextPane t) throws Exception {
+    public void parseXML(String s) throws Exception {
+        if(profile.getView() != null)
+            t = profile.getView().getChatArea();
+        
         DocumentBuilder db = DocumentBuilderFactory.newInstance().newDocumentBuilder();
         InputSource is = new InputSource();
         is.setCharacterStream(new StringReader(s));
@@ -206,7 +217,9 @@ public class Client implements Observer {
                         System.exit(1);
                     }
                     try {
-                        parseXML(IN, profile.getView().getChatArea());
+                        System.out.println("C reads: " + IN);
+                        parseXML(IN);//, profile.getView().getChatArea());
+                        System.out.println("parsed(?)");
                     } catch(Exception e) {
                         try {
                         StyledDocument sdoc = profile.getView().getChatArea().getStyledDocument();

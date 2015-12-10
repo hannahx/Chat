@@ -124,7 +124,6 @@ public class Server {
                 if(element.getElementsByTagName("connect").item(0) != null) {
                     System.out.println(name + " connected");
                     model.addName(name);
-                    //int newID = model.generateID();
                     model.addID(id);
                     model.printModel();
                     updateInfo();
@@ -146,11 +145,12 @@ public class Server {
                 s += "<online name = " + '"' + model.getNames().get(i) + '"' + "></online>";
             }
             s = "<message>" + s + "</message>";
+            
             for(int i=0; i<outputs.size(); i++) {
                 outputs.get(i).println(s);
             }
             System.out.println("S: sends online message: " + s);
-            System.out.println("outpus: " + outputs.size());
+            //System.out.println("outpus: " + outputs.size());
         }
     }
 }

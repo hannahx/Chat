@@ -23,7 +23,6 @@ public class Message extends Observable  {
         this.p = p;
         this.mess = mess;
     }
-    
     /* Use this to connect or disconnect 
        i=1: connect
        i=0: disconnect */
