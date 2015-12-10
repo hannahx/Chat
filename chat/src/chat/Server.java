@@ -149,7 +149,7 @@ public class Server {
             for(int i=0; i<outputs.size(); i++) {
                 outputs.get(i).println(s);
             }
-            System.out.println("S: sends online message: " + s);
+            //System.out.println("S: sends online message: " + s);
             //System.out.println("outpus: " + outputs.size());
         }
     }

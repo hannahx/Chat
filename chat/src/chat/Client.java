@@ -42,8 +42,6 @@ public class Client implements Observer {
     private PrintWriter out = null;
     private BufferedReader input = null;
     private Profile profile;
-    private boolean Disconnect = false;
-    private int newID;
     
     private DefaultListModel listModel;
     private ArrayList<String> onlineArr = new ArrayList<String>();
@@ -56,9 +54,8 @@ public class Client implements Observer {
         
         listModel = new DefaultListModel();
         
-        if(profile.getView() != null)
-            t = profile.getView().getChatArea();
-        //listModel.addElement("Empty");
+//        if(profile.getView() != null)
+//            t = profile.getView().getChatArea();
         
         //Connect to server
         try {
@@ -97,8 +94,9 @@ public class Client implements Observer {
     }
     
     public void parseXML(String s) throws Exception {
-        if(profile.getView() != null)
-            t = profile.getView().getChatArea();
+        if(profile.getChatView() != null)
+                if(t==null)
+                    t = profile.getChatView().getChatArea();
         
         DocumentBuilder db = DocumentBuilderFactory.newInstance().newDocumentBuilder();
         InputSource is = new InputSource();
@@ -107,7 +105,7 @@ public class Client implements Observer {
         Document doc = db.parse(is);
         NodeList nodes = doc.getElementsByTagName("message");
         
-        System.out.println("client reads: " + s);
+        //System.out.println("client reads: " + s);
 
         for (int i = 0; i < nodes.getLength(); i++) {
             Element element = (Element) nodes.item(i);
@@ -120,7 +118,6 @@ public class Client implements Observer {
             if(element.getElementsByTagName("disconnect").item(0) != null) {
                 NodeList disconnect = element.getElementsByTagName("disconnect");
                 finalText += " logged out!\n";
-                Disconnect = true;
             }
             else if (element.getElementsByTagName("online").item(0) != null){
                 NodeList online = element.getElementsByTagName("online");
@@ -154,7 +151,7 @@ public class Client implements Observer {
                     String n = line.getAttribute("name");
                     listModel.addElement(n);
                     
-                    onlineArr.add(n);
+                    onlineArr.add(n); //TODO: ska uppdateras för alla clienter!
                 }  
             }
             else {
@@ -193,13 +190,11 @@ public class Client implements Observer {
         return "";
     }
     
+    //TODO: should contain group chats
     public DefaultListModel getListModel() {
-        for(int j=0; j<listModel.size(); j++) {
-            System.out.println("--> " + listModel.get(j));
-        }
-//        if(listModel.size()>0)
-//            return listModel;
-//        return null;
+//        for(int j=0; j<listModel.size(); j++) {
+//            System.out.println("--> " + listModel.get(j));
+//        }
         return listModel;
     }
     
@@ -217,19 +212,16 @@ public class Client implements Observer {
                         System.exit(1);
                     }
                     try {
-                        System.out.println("C reads: " + IN);
-                        parseXML(IN);//, profile.getView().getChatArea());
-                        System.out.println("parsed(?)");
+                        //System.out.println("C reads: " + IN);
+                        parseXML(IN);
                     } catch(Exception e) {
                         try {
-                        StyledDocument sdoc = profile.getView().getChatArea().getStyledDocument();
-                        Style style = profile.getView().getChatArea().addStyle("Style", null);
-                        StyleConstants.setForeground(style, Color.black);
-                        sdoc.insertString(sdoc.getLength(), "Broken message... \n" ,style); 
+                            StyledDocument sdoc = profile.getChatView().getChatArea().getStyledDocument();
+                            Style style = profile.getChatView().getChatArea().addStyle("Style", null);
+                            StyleConstants.setForeground(style, Color.black);
+                            sdoc.insertString(sdoc.getLength(), "Broken message... \n" ,style); 
                         } catch (Exception E) {}
                     }
-
-                    //System.out.println("C (" + profile.getName() + ") reads: " + IN);
                 } catch (IOException ex) {
                     System.out.println("C: Error: Unable to read server response\n\t" + ex);
                 }

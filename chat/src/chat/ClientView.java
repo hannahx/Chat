@@ -21,6 +21,7 @@ public class ClientView extends javax.swing.JPanel {
     
     public ClientView(Profile profile) {
         this.profile = profile;
+        profile.setClientView(this);
         
         initComponents();
         
@@ -173,6 +174,8 @@ public class ClientView extends javax.swing.JPanel {
     class ClientStarter extends Thread {
         public void run () {
             client = new Client(profile);
+            //wait for 1 sec to make sure client is connected
+            //TODO: instead - wait UNTIL client is connected
             try {
                 Thread.sleep(1000);                 //1000 milliseconds is one second.
             } catch(InterruptedException ex) {

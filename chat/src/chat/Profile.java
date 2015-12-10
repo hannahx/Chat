@@ -19,6 +19,7 @@ public class Profile {
     private String color;
     private JFrame frame;
     private ChatView cv;
+    private ClientView clv;
     int ID;
     
     public Profile(String name, String color, int port, String IP, JFrame frame, ChatView cv, int ID) {
@@ -59,12 +60,20 @@ public class Profile {
         return frame;
     }
     
-    public ChatView getView() {
+    public ChatView getChatView() {
         return cv;
     }
     
-    public void setView(ChatView c) {
+    public void setChatView(ChatView c) {
         cv = c;
+    }
+    
+    public ClientView getClientView() {
+        return clv;
+    }
+    
+    public void setClientView(ClientView c) {
+        clv = c;
     }
     
     public void setID(int id) {

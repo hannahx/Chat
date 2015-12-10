@@ -23,7 +23,7 @@ public class ChatView extends JPanel {
     
     public ChatView(Profile profile, Client client) {
         
-        profile.setView(this);
+        profile.setChatView(this);
         this.profile = profile;
         this.client = client;
         
