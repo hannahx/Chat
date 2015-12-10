@@ -5,10 +5,10 @@
  */
 package chat;
 
-import javax.swing.DefaultListModel;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import javax.swing.JFrame;
-import javax.swing.JList;
-import java.util.ArrayList;
+import javax.swing.JTextPane;
 
 /**
  *
@@ -27,7 +27,14 @@ public class ClientView extends javax.swing.JPanel {
         
         ClientStarter cs = new ClientStarter(); //Starts a client in new thread
         cs.start();
-
+        
+        //Close window --> log out
+        JFrame frame = profile.getFrame();
+        frame.addWindowListener(new WindowAdapter() {
+            public void windowClosing(WindowEvent evt) {
+                logOut(evt);
+            }
+        });
     }
 
     /**
@@ -151,21 +158,19 @@ public class ClientView extends javax.swing.JPanel {
     // End of variables declaration//GEN-END:variables
 
     
-    private void chooseChat() {
-        System.out.println("Choose chat");
-        DefaultListModel listModel = new DefaultListModel();
-
-        listModel = client.getListModel();
-        //jList1 = new JList(listModel);
-        //jList1.clear();
-        //onlineTextPane.setText("test\n");
-        ArrayList<String> online = client.getOnline();
-        for(int i=0; i<online.size(); i++) {
-            onlineTextPane.setText(onlineTextPane.getText() + online.get(i) + "\n");
-        } 
+//    private void chooseChat() {
+//
+//    }
+    
+    public void logOut(Object evt) {
+    Message message = new Message(profile,0); // Send disconnect message
+    client.update(message, evt);
+    profile.getFrame().setVisible(false);//TODO: really closed??
     }
     
-    
+    public JTextPane getOnlineArea() {
+        return onlineTextPane;
+    }
     
     
     /**
@@ -176,12 +181,12 @@ public class ClientView extends javax.swing.JPanel {
             client = new Client(profile);
             //wait for 1 sec to make sure client is connected
             //TODO: instead - wait UNTIL client is connected
-            try {
-                Thread.sleep(1000);                 //1000 milliseconds is one second.
-            } catch(InterruptedException ex) {
-                Thread.currentThread().interrupt();
-            }
-            chooseChat();
+//            try {
+//                Thread.sleep(1000);                 //1000 milliseconds is one second.
+//            } catch(InterruptedException ex) {
+//                Thread.currentThread().interrupt();
+//            }
+            //chooseChat();
         }
     }
 

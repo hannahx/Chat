@@ -17,9 +17,15 @@ public class ChatModel {
     ArrayList<String> names;
     ArrayList<Integer> IDs;
     
+    ArrayList<String> groupChats;
+    ArrayList<Integer> groupChatIDs;
+    
     public ChatModel() {
         names = new ArrayList<String>();
         IDs = new ArrayList<Integer>();
+        
+        groupChats = new ArrayList<String>();
+        groupChatIDs = new ArrayList<Integer>();
     }
     
     public int generateID() {

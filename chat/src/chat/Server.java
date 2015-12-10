@@ -141,8 +141,8 @@ public class Server {
         public void updateInfo() {
             String s = "";
             for(int i=0; i<model.getIDs().size(); i++) {
-                //s += "<online name = " + '"' + model.getNames().get(i) + '"' + " ID = " + '"' + model.getIDs().get(i) + '"' + "></online>";
-                s += "<online name = " + '"' + model.getNames().get(i) + '"' + "></online>";
+                s += "<online name = " + '"' + model.getNames().get(i) + '"' + " ID = " + '"' + model.getIDs().get(i) + '"' + "></online>";
+                //s += "<online name = " + '"' + model.getNames().get(i) + '"' + "></online>";
             }
             s = "<message>" + s + "</message>";
             

@@ -17,7 +17,7 @@ public class Profile {
     private int port;
     private String IP;
     private String color;
-    private JFrame frame;
+    private JFrame frame; //Frame for ClientView
     private ChatView cv;
     private ClientView clv;
     int ID;

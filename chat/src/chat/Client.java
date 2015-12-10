@@ -121,7 +121,7 @@ public class Client implements Observer {
             }
             else if (element.getElementsByTagName("online").item(0) != null){
                 NodeList online = element.getElementsByTagName("online");
-                System.out.println("C: ONLINE");
+                //System.out.println("C: ONLINE");
                 //TODO: hoppar över detta så länge
 //                if(profile.getView().getInfoArea() != null) {
 //                    JTextPane jt = profile.getView().getInfoArea();
@@ -143,15 +143,16 @@ public class Client implements Observer {
 //                    }
 //                }
                 
-                listModel.clear();
-                onlineArr = new ArrayList<String>();//or ety or something
-                //listModel.addElement("Empty");
+                JTextPane pane = profile.getClientView().getOnlineArea();
+                pane.setText("");
                 for(int j=0; j<online.getLength(); j++) {
                     line = (Element) online.item(j);
                     String n = line.getAttribute("name");
-                    listModel.addElement(n);
-                    
-                    onlineArr.add(n); //TODO: ska uppdateras för alla clienter!
+                    int id = Integer.parseInt(line.getAttribute("ID"));
+                    if(id == profile.ID)
+                        pane.setText(pane.getText() + n + " (you)\n");
+                    else
+                        pane.setText(pane.getText() + n + "\n");
                 }  
             }
             else {
@@ -188,18 +189,6 @@ public class Client implements Observer {
           return cd.getData();
         }
         return "";
-    }
-    
-    //TODO: should contain group chats
-    public DefaultListModel getListModel() {
-//        for(int j=0; j<listModel.size(); j++) {
-//            System.out.println("--> " + listModel.get(j));
-//        }
-        return listModel;
-    }
-    
-    public ArrayList<String> getOnline() {
-        return onlineArr;
     }
     
     class ReadFromServer extends Thread {

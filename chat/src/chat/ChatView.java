@@ -29,13 +29,14 @@ public class ChatView extends JPanel {
         
         initComponents();
         
-        //Log out on close:
-        JFrame frame = profile.getFrame();
-        frame.addWindowListener(new WindowAdapter() {
-            public void windowClosing(WindowEvent evt) {
-                logOut(evt);
-            }
-        });
+        
+        //TODO: ist för logga ut: leave chat.
+//        JFrame frame = profile.getFrame(); <-- fe frame
+//        frame.addWindowListener(new WindowAdapter() {
+//            public void windowClosing(WindowEvent evt) {
+//                logOut(evt);
+//            }
+//        });
     }
 
     /**
